@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Première Maths — Le Guide Ultime</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #1a1a24;
+  --card: #14141e;
+  --border: #2a2a3a;
+  --text: #e4e4ef;
+  --text2: #9898b0;
+  --accent: #6c5ce7;
+  --accent2: #a29bfe;
+  --green: #00b894;
+  --orange: #fdcb6e;
+  --red: #ff7675;
+  --blue: #74b9ff;
+  --pink: #fd79a8;
+  --cyan: #81ecec;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* NAV */
+.nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-weight: 800; font-size: 1.2rem;
+  background: linear-gradient(135deg, var(--accent), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.nav-links { display:flex; gap:1.5rem; }
+.nav-links a {
+  color: var(--text2); text-decoration:none; font-size:0.85rem; font-weight:500;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--accent2); }
+.nav-toggle { display:none; background:none; border:none; color:var(--text); font-size:1.5rem; cursor:pointer; }
+
+/* HERO */
+.hero {
+  min-height: 100vh; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding: 6rem 2rem 4rem;
+  position: relative;
+  background: radial-gradient(ellipse at 50% 0%, rgba(108,92,231,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, rgba(253,121,168,0.08) 0%, transparent 50%);
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight:900;
+  line-height:1.1; margin-bottom:1.5rem;
+}
+.hero h1 span {
+  background: linear-gradient(135deg, var(--accent2), var(--pink), var(--orange));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.hero p { color:var(--text2); font-size:1.15rem; max-width:600px; margin:0 auto 2.5rem; }
+.hero-badges { display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
+.badge {
+  padding:0.4rem 1rem; border-radius:999px; font-size:0.8rem; font-weight:600;
+  border:1px solid var(--border); background:var(--card);
+}
+.badge.accent { border-color:var(--accent); color:var(--accent2); }
+.badge.green { border-color:var(--green); color:var(--green); }
+.badge.orange { border-color:var(--orange); color:var(--orange); }
+.cta-btn {
+  display:inline-block; padding:1rem 2.5rem; border-radius:12px; font-weight:700;
+  font-size:1rem; text-decoration:none; transition:all .3s;
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  color:#fff; border:none; cursor:pointer;
+}
+.cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(108,92,231,0.4); }
+
+/* SECTIONS */
+.section {
+  max-width:1200px; margin:0 auto;
+  padding:5rem 2rem;
+}
+.section-label {
+  font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:3px;
+  color:var(--accent2); margin-bottom:0.5rem;
+}
+.section-title {
+  font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; margin-bottom:1rem;
+}
+.section-desc { color:var(--text2); max-width:700px; margin-bottom:3rem; }
+
+/* CHAPTER CARDS */
+.chapters-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(340px,1fr)); gap:1.5rem;
+}
+.chapter-card {
+  background:var(--card); border:1px solid var(--border); border-radius:16px;
+  padding:2rem; cursor:pointer; transition:all .3s; position:relative; overflow:hidden;
+}
+.chapter-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--accent), var(--pink));
+  opacity:0; transition:opacity .3s;
+}
+.chapter-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.chapter-card:hover::before { opacity:1; }
+.chapter-icon { font-size:2rem; margin-bottom:1rem; }
+.chapter-card h3 { font-size:1.2rem; font-weight:700; margin-bottom:0.5rem; }
+.chapter-card p { color:var(--text2); font-size:0.9rem; margin-bottom:1rem; }
+.chapter-tags { display:flex; gap:0.5rem; flex-wrap:wrap; }
+.tag {
+  padding:0.2rem 0.6rem; border-radius:6px; font-size:0.7rem; font-weight:600;
+  background:rgba(108,92,231,0.15); color:var(--accent2);
+}
+
+/* CONTENT PANEL */
+.content-panel {
+  display:none; background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:3rem; margin-top:2rem; animation:fadeIn .4s;
+}
+.content-panel.active { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.content-panel h2 { font-size:1.8rem; font-weight:800; margin-bottom:1.5rem; }
+.content-panel h3 { font-size:1.3rem; font-weight:700; margin:2rem 0 1rem; color:var(--accent2); }
+.content-panel h4 { font-size:1.05rem; font-weight:600; margin:1.5rem 0 0.75rem; color:var(--orange); }
+
+.content-panel ul, .content-panel ol { padding-left:1.5rem; margin-bottom:1rem; }
+.content-panel li { margin-bottom:0.5rem; color:var(--text); }
+.content-panel li::marker { color:var(--accent); }
+
+.formula-box {
+  background:rgba(108,92,231,0.08); border:1px solid rgba(108,92,231,0.25);
+  border-radius:12px; padding:1.5rem; margin:1.5rem 0;
+}
+.formula-box .katex { font-size:1.1em; }
+
+.tip-box {
+  background:rgba(0,184,148,0.08); border:1px solid rgba(0,184,148,0.25);
+  border-radius:12px; padding:1.5rem; margin:1.5rem 0;
+}
+.tip-box strong { color:var(--green); }
+
+.warn-box {
+  background:rgba(253,203,110,0.08); border:1px solid rgba(253,203,110,0.25);
+  border-radius:12px; padding:1.5rem; margin:1.5rem 0;
+}
+.warn-box strong { color:var(--orange); }
+
+.demo-box {
+  background:rgba(255,118,117,0.08); border:1px solid rgba(255,118,117,0.25);
+  border-radius:12px; padding:1.5rem; margin:1.5rem 0;
+}
+.demo-box strong { color:var(--red); }
+
+.exercise-box {
+  background:rgba(116,185,255,0.08); border:1px solid rgba(116,185,255,0.25);
+  border-radius:12px; padding:1.5rem; margin:1.5rem 0;
+}
+.exercise-box strong { color:var(--blue); }
+
+.back-btn {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  color:var(--accent2); font-weight:600; font-size:0.9rem;
+  background:none; border:none; cursor:pointer; margin-bottom:1.5rem;
+}
+.back-btn:hover { color:var(--accent); }
+
+/* FORMULAS GRID */
+.formulas-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:1rem;
+}
+.formula-card {
+  background:var(--bg2); border:1px solid var(--border); border-radius:12px;
+  padding:1.25rem; text-align:center;
+}
+.formula-card h4 { font-size:0.8rem; color:var(--text2); margin-bottom:0.75rem; text-transform:uppercase; letter-spacing:1px; }
+.formula-card .katex { font-size:1.2em; }
+
+/* TIPS SECTION */
+.tips-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:1.5rem;
+}
+.tip-card {
+  background:var(--card); border:1px solid var(--border); border-radius:16px; padding:2rem;
+}
+.tip-card .tip-num {
+  font-size:3rem; font-weight:900; line-height:1;
+  background:linear-gradient(135deg, var(--accent), var(--pink));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  margin-bottom:1rem;
+}
+.tip-card h3 { font-size:1.1rem; font-weight:700; margin-bottom:0.75rem; }
+.tip-card p { color:var(--text2); font-size:0.9rem; }
+
+/* PYTHON SECTION */
+.code-block {
+  background:#1e1e2e; border:1px solid var(--border); border-radius:12px;
+  padding:1.5rem; margin:1.5rem 0; overflow-x:auto;
+  font-family:'JetBrains Mono',monospace; font-size:0.85rem; line-height:1.8;
+}
+.code-block .kw { color:#c678dd; }
+.code-block .fn { color:#61afef; }
+.code-block .str { color:#98c379; }
+.code-block .num { color:#d19a66; }
+.code-block .cm { color:#5c6370; font-style:italic; }
+
+/* FOOTER */
+.footer {
+  text-align:center; padding:3rem 2rem; border-top:1px solid var(--border);
+  color:var(--text2); font-size:0.85rem;
+}
+.footer a { color:var(--accent2); text-decoration:none; }
+
+/* MOBILE */
+@media(max-width:768px) {
+  .nav-links { display:none; }
+  .nav-toggle { display:block; }
+  .chapters-grid { grid-template-columns:1fr; }
+  .formulas-grid { grid-template-columns:1fr; }
+  .tips-grid { grid-template-columns:1fr; }
+  .content-panel { padding:1.5rem; }
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+  position:fixed; top:64px; left:0; height:3px; z-index:99;
+  background:linear-gradient(90deg, var(--accent), var(--pink));
+  transition:width .1s;
+}
+
+/* SEARCH */
+.search-wrap {
+  max-width:500px; margin:0 auto 3rem; position:relative;
+}
+.search-wrap input {
+  width:100%; padding:1rem 1.5rem; border-radius:12px;
+  background:var(--card); border:1px solid var(--border);
+  color:var(--text); font-size:1rem; font-family:inherit;
+  outline:none; transition:border-color .3s;
+}
+.search-wrap input:focus { border-color:var(--accent); }
+.search-wrap input::placeholder { color:var(--text2); }
+
+/* TABS */
+.tab-bar { display:flex; gap:0.5rem; margin-bottom:2rem; flex-wrap:wrap; }
+.tab-btn {
+  padding:0.5rem 1.25rem; border-radius:999px; font-size:0.85rem; font-weight:600;
+  background:var(--bg2); border:1px solid var(--border); color:var(--text2);
+  cursor:pointer; transition:all .2s;
+}
+.tab-btn:hover { border-color:var(--accent); color:var(--accent2); }
+.tab-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="nav">
+  <div class="nav-logo">∑ Première Maths</div>
+  <div class="nav-links">
+    <a href="#programme">Programme</a>
+    <a href="#formules">Formules</a>
+    <a href="#python">Python</a>
+    <a href="#conseils">Conseils</a>
+    <a href="#entrainement">Entraînement</a>
+  </div>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badges">
+      <span class="badge accent">Spécialité Maths</span>
+      <span class="badge green">Première Générale</span>
+      <span class="badge orange">Programme Officiel 2024</span>
+    </div>
+    <h1>Tout pour être<br><span>premier en maths</span></h1>
+    <p>Le guide complet couvrant l'intégralité du programme de spécialité mathématiques de première : cours, formules, démonstrations, algorithmes et conseils.</p>
+    <a href="#programme" class="cta-btn">Commencer →</a>
+  </div>
+</section>
+
+<!-- PROGRAMME -->
+<section class="section" id="programme">
+  <div class="section-label">Programme officiel</div>
+  <div class="section-title">Les 4 piliers + transversales</div>
+  <div class="section-desc">Chaque chapitre couvert en profondeur : contenus, capacités attendues, démonstrations exigibles, algorithmes et approfondissements.</div>
+
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="🔍 Rechercher un thème, formule, notion..." oninput="filterChapters(this.value)">
+  </div>
+
+  <div class="chapters-grid" id="chaptersGrid">
+    <!-- Transversales -->
+    <div class="chapter-card" data-ch="logique" onclick="showChapter('logique')">
+      <div class="chapter-icon">🧩</div>
+      <h3>Vocabulaire ensembliste & logique</h3>
+      <p>Ensembles, connecteurs logiques, implication, contraposée, quantificateurs, raisonnements.</p>
+      <div class="chapter-tags"><span class="tag">Transversal</span><span class="tag">Raisonnement</span></div>
+    </div>
+
+    <div class="chapter-card" data-ch="algo" onclick="showChapter('algo')">
+      <div class="chapter-icon">🐍</div>
+      <h3>Algorithmique & programmation</h3>
+      <p>Python, listes, fonctions, boucles, conditions, programmation modulaire.</p>
+      <div class="chapter-tags"><span class="tag">Transversal</span><span class="tag">Python</span></div>
+    </div>
+
+    <div class="chapter-card" data-ch="auto" onclick="showChapter('auto')">
+      <div class="chapter-icon">⚡</div>
+      <h3>Automatismes</h3>
+      <p>Évolutions, calcul algébrique, fonctions, statistiques, probabilités — les réflexes à avoir.</p>
+      <div class="chapter-tags"><span class="tag">Transversal</span><span class="tag">Calcul rapide</span></div>
+    </div>
+
+    <!-- ALGÈBRE -->
+    <div class="chapter-card" data-ch="suites" onclick="showChapter('suites')">
+      <div class="chapter-icon">🔢</div>
+      <h3>Suites numériques</h3>
+      <p>Arithmétiques, géométriques, récurrence, limite intuitive, sommes, modélisations.</p>
+      <div class="chapter-tags"><span class="tag">Algèbre</span><span class="tag">Démonstration</span></div>
+    </div>
+
+    <div class="chapter-card" data-ch="second" onclick="showChapter('second')">
+      <div class="chapter-icon">📐</div>
+      <h3>Second degré</h3>
+      <p>Forme canonique, discriminant, factorisation, signe, équations, optimisation.</p>
+      <div class="chapter-tags"><span class="tag">Algèbre</span><span class="tag">Démonstration</span></div>
+    </div>
+
+    <!-- ANALYSE -->
+    <div class="chapter-card" data-ch="derivation" onclick="showChapter('derivation')">
+      <div class="chapter-icon">📈</div>
+      <h3>Dérivation</h3>
+      <p>Taux de variation, nombre dérivé, tangente, fonction dérivée, opérations.</p>
+      <div class="chapter-tags"><span class="tag">Analyse</span><span class="tag">Démonstration</span></div>
+    </div>
+
+    <div class="chapter-card" data-ch="variations" onclick="showChapter('variations')">
+      <div class="chapter-icon">📊</div>
+      <h3>Variations de fonctions</h3>
+      <p>Lien dérivée/variations, extrémums, optimisation, fonctions paires/impaires.</p>
+      <div class="chapter-tags"><span class="tag">Analyse</span><span class="tag">Optimisation</span></div>
+    </div>
+
+    <div class="chapter-card" data-ch="exp" onclick="showChapter('exp')">
+      <div class="chapter-icon">🚀</div>
+      <h3>Fonction exponentielle</h3>
+      <p>Définition f'=f, propriétés algébriques, croissance exponentielle, lien suites géométriques.</p>
+      <div class="chapter-tags"><span class="tag">Analyse</span><span class="tag">Fondamental</span></div>
+    </div>
+
+    <div class="chapter-card" data-ch="trigo" onclick="showChapter('trigo')">
+      <div class="chapter-icon">⭕</div>
+      <h3>Trigonométrie</h3>
+      <p>Cercle trigonométrique, radian, cosinus, sinus, valeurs remarquables.</p>
+      <div class="chapter-tags"><span class="tag">Analyse</span><span class="tag">Géométrie</span></div>
+    </div>
+
+    <!-- GÉOMÉTRIE -->
+    <div class="chapter-card" data-ch="scalaire" onclick="showChapter('scalaire')">
+      <div class="chapter-icon">➡️</div>
+      <h3>Produit scalaire</h3>
+      <p>Projection orthogonale, formule du cosinus, bilinéarité, Al-Kashi, orthogonalité.</p>
+      <div class="chapter-tags"><span class="tag">Géométrie</span><span class="tag">Démonstration</span></div>
+    </div>
+
+    <div class="chapter-card" data-ch="geomrep" onclick="showChapter('geomrep')">
+      <div class="chapter-icon">📍</div>
+      <h3>Géométrie repérée</h3>
+      <p>Vecteur normal, équation de droite, projection orthogonale, équation de cercle.</p>
+      <div class="chapter-tags"><span class="tag">Géométrie</span><span class="tag">Repère</span></div>
+    </div>
+
+    <!-- PROBAS -->
+    <div class="chapter-card" data-ch="probas" onclick="showChapter('probas')">
+      <div class="chapter-icon">🎲</div>
+      <h3>Probabilités conditionnelles</h3>
+      <p>Indépendance, probabilités totales, arbres pondérés, épreuves de Bernoulli.</p>
+      <div class="chapter-tags"><span class="tag">Probabilités</span><span class="tag">Modélisation</span></div>
+    </div>
+
+    <div class="chapter-card" data-ch="va" onclick="showChapter('va')">
+      <div class="chapter-icon">🎯</div>
+      <h3>Variables aléatoires</h3>
+      <p>Loi de probabilité, espérance, variance, écart type, König-Huygens, simulation.</p>
+      <div class="chapter-tags"><span class="tag">Probabilités</span><span class="tag">Statistiques</span></div>
+    </div>
+  </div>
+
+  <!-- CHAPTER CONTENT PANELS -->
+  <div id="contentArea"></div>
+</section>
+
+<!-- FORMULES -->
+<section class="section" id="formules">
+  <div class="section-label">Fiche de révision</div>
+  <div class="section-title">Toutes les formules</div>
+  <div class="section-desc">Le mémo exhaustif des formules à connaître par cœur — les automatismes qui font la différence.</div>
+
+  <div class="tab-bar" id="formulaTabs">
+    <button class="tab-btn active" onclick="showFormulaTab('algebre')">Algèbre</button>
+    <button class="tab-btn" onclick="showFormulaTab('analyse')">Analyse</button>
+    <button class="tab-btn" onclick="showFormulaTab('geo')">Géométrie</button>
+    <button class="tab-btn" onclick="showFormulaTab('probas')">Probabilités</button>
+  </div>
+
+  <div id="formulaContent"></div>
+</section>
+
+<!-- PYTHON -->
+<section class="section" id="python">
+  <div class="section-label">Algorithmique</div>
+  <div class="section-title">Python pour les maths</div>
+  <div class="section-desc">Tous les algorithmes du programme, prêts à coder et à comprendre.</div>
+
+  <div class="tab-bar" id="pythonTabs">
+    <button class="tab-btn active" onclick="showPythonTab('suites_algo')">Suites</button>
+    <button class="tab-btn" onclick="showPythonTab('seuil')">Seuils</button>
+    <button class="tab-btn" onclick="showPythonTab('euler')">Euler/Newton</button>
+    <button class="tab-btn" onclick="showPythonTab('montecarlo')">Monte-Carlo</button>
+    <button class="tab-btn" onclick="showPythonTab('va_algo')">Variables aléatoires</button>
+  </div>
+  <div id="pythonContent"></div>
+</section>
+
+<!-- CONSEILS -->
+<section class="section" id="conseils">
+  <div class="section-label">Stratégie</div>
+  <div class="section-title">Comment être premier en classe</div>
+  <div class="section-desc">Les méthodes concrètes qui transforment un bon élève en meilleur de la classe.</div>
+
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-num">01</div>
+      <h3>Automatismes = liberté</h3>
+      <p>Les calculs de base (dérivées, factorisations, équations du 2nd degré) doivent être des réflexes. Entraînez-vous 10 min/jour en calcul mental. Quand le technique est automatique, l'esprit est libre pour chercher.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">02</div>
+      <h3>Comprenez les démonstrations</h3>
+      <p>Les démonstrations exigibles ne sont pas du par cœur : ce sont des modèles de raisonnement. Comprendre la démonstration du terme général d'une suite géométrique, c'est maîtriser le raisonnement par récurrence sans le nommer.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">03</div>
+      <h3>Cherchez avant de regarder</h3>
+      <p>Face à un exercice, passez au moins 5 minutes à chercher seul avant de demander de l'aide. C'est dans la lutte qu'on apprend. Notez vos pistes, même fausses — l'erreur est formatrice.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">04</div>
+      <h3>Changez de registre</h3>
+      <p>Le programme insiste : savoir passer du numérique à l'algébrique, du graphique au symbolique. Une suite géométrique ? Visualisez-la, calculez ses termes, écrivez sa formule. Les trois registres ensemble = compréhension profonde.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">05</div>
+      <h3>La trace écrite est votre bible</h3>
+      <p>Un cours bien structuré = un outil de révision efficace. Distinction claire : définition / propriété admise / théorème démontré. Relisez votre trace écrite régulièrement, pas juste avant le contrôle.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">06</div>
+      <h3>Python = allié secret</h3>
+      <p>Les algorithmes du programme (seuil, Euler, Monte-Carlo) ne sont pas accessoires. Les coder vous donne une intuition que le calcul seul ne fournit pas. Utilisez Python pour vérifier, explorer, conjecturer.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">07</div>
+      <h3>Travaillez l'oral</h3>
+      <p>L'épreuve orale du bac demande de reformuler, d'argumenter, de convaincre. Entraînez-vous à expliquer un raisonnement à voix haute. Si vous ne pouvez pas l'expliquer simplement, vous ne l'avez pas vraiment compris.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">08</div>
+      <h3>Connectez les chapitres</h3>
+      <p>Les maths ne sont pas en silos. Le 2nd degré apparaît en optimisation (analyse), en géométrie (parabole), en probas (variance). Cherchez ces liens — c'est ce qui distingue un excellent élève d'un bon élève.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">09</div>
+      <h3>Faites des problèmes, pas juste des exos</h3>
+      <p>Les exercices d'application mécanique sont nécessaires mais insuffisants. Les problèmes substantiels (type bac) développent l'initiative. Faites-en un par semaine minimum.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ENTRAÎNEMENT -->
+<section class="section" id="entrainement">
+  <div class="section-label">Pratique</div>
+  <div class="section-title">S'entraîner efficacement</div>
+  <div class="section-desc">Des exercices types classés par chapitre avec les compétences travaillées.</div>
+
+  <div id="exerciseContent"></div>
+</section>
+
+<footer class="footer">
+  <p>Première Maths — Le Guide Ultime · Basé sur le programme officiel de spécialité mathématiques de première générale</p>
+  <p style="margin-top:0.5rem"><a href="https://github.com/hermespromox/premiere-maths">Code source</a></p>
+</footer>
+
+<script>
+// =================== CHAPTER CONTENT ===================
+const chapters = {
+logique: {
+  title: "🧩 Vocabulaire ensembliste & logique",
+  sections: [
+    {h3:"Ensembles et notations", content:`
+      <ul>
+        <li><strong>Appartenance</strong> : $x \\in E$ signifie que $x$ est élément de $E$</li>
+        <li><strong>Inclusion</strong> : $A \\subset E$ signifie que tout élément de $A$ est dans $E$</li>
+        <li><strong>Ensemble vide</strong> : $\\varnothing$, ensemble ne contenant aucun élément</li>
+        <li><strong>Réunion</strong> : $A \\cup B = \\{x \\in E \\mid x \\in A \\text{ ou } x \\in B\\}$</li>
+        <li><strong>Intersection</strong> : $A \\cap B = \\{x \\in E \\mid x \\in A \\text{ et } x \\in B\\}$</li>
+        <li><strong>Complémentaire</strong> : $\\overline{A}$ (ou $E \\setminus A$), ensemble des éléments de $E$ pas dans $A$</li>
+        <li><strong>Cardinal</strong> : $\\text{Card}(A)$ = nombre d'éléments de $A$ (si $A$ fini)</li>
+        <li><strong>Produit cartésien</strong> : $A \\times B = \\{(a,b) \\mid a \\in A, b \\in B\\}$</li>
+      </ul>
+      <div class="formula-box">
+        <strong>Lois de Morgan :</strong><br>
+        $\\overline{A \\cap B} = \\overline{A} \\cup \\overline{B}$<br>
+        $\\overline{A \\cup B} = \\overline{A} \\cap \\overline{B}$
+      </div>
+    `},
+    {h3:"Connecteurs logiques", content:`
+      <ul>
+        <li><strong>« et »</strong> : $P \\text{ et } Q$ est vraie si les deux sont vraies</li>
+        <li><strong>« ou »</strong> : $P \\text{ ou } Q$ est vraie si au moins l'une est vraie (ou inclusif)</li>
+        <li><strong>Contre-exemple</strong> : pour montrer qu'une proposition est fausse, un seul contre-exemple suffit</li>
+      </ul>
+    `},
+    {h3:"Implication et équivalence", content:`
+      <div class="formula-box">
+        <strong>Implication :</strong> $P \\Rightarrow Q$<br>
+        Si $P$ est vraie, alors $Q$ est vraie.<br><br>
+        <strong>Réciproque :</strong> $Q \\Rightarrow P$<br><br>
+        <strong>Contraposée :</strong> $\\text{non } Q \\Rightarrow \\text{non } P$<br>
+        La contraposée est équivalente à l'implication !<br><br>
+        <strong>Équivalence :</strong> $P \\Leftrightarrow Q$ (implication + réciproque)
+      </div>
+      <div class="tip-box">
+        <strong>💡 Astuce :</strong> Quand vous n'arrivez pas à démontrer $P \\Rightarrow Q$, essayez la contraposée : montrez que non $Q \\Rightarrow$ non $P$. C'est souvent plus simple !
+      </div>
+    `},
+    {h3:"Conditions nécessaires / suffisantes", content:`
+      <ul>
+        <li><strong>Condition nécessaire</strong> : dans $P \\Rightarrow Q$, $Q$ est nécessaire pour $P$</li>
+        <li><strong>Condition suffisante</strong> : dans $P \\Rightarrow Q$, $P$ est suffisant pour $Q$</li>
+        <li><strong>Condition nécessaire et suffisante</strong> : $P \\Leftrightarrow Q$</li>
+      </ul>
+    `},
+    {h3:"Quantificateurs", content:`
+      <ul>
+        <li><strong>Universel</strong> : « Pour tout $x$... » ($\\forall$ — non exigible en symbole)</li>
+        <li><strong>Existentiel</strong> : « Il existe $x$... » ($\\exists$ — non exigible en symbole)</li>
+        <li><strong>Négation</strong> : la négation de « $\\forall x, P(x)$ » est « $\\exists x, \\text{non } P(x)$ » et inversement</li>
+      </ul>
+      <div class="warn-box">
+        <strong>⚠️ Attention :</strong> L'ordre des quantificateurs compte ! « $\\forall x, \\exists y$ » ≠ « $\\exists y, \\forall x$ »
+      </div>
+    `},
+    {h3:"Types de raisonnement", content:`
+      <ul>
+        <li><strong>Disjonction des cas</strong> : on sépare en cas mutuellement exclusifs qui couvrent toutes les possibilités</li>
+        <li><strong>Raisonnement par l'absurde</strong> : on suppose la négation de ce qu'on veut prouver et on arrive à une contradiction</li>
+        <li><strong>Raisonnement par contraposée</strong> : au lieu de $P \\Rightarrow Q$, on montre non $Q \\Rightarrow$ non $P$</li>
+      </ul>
+      <div class="demo-box">
+        <strong>🔬 Démonstration type par l'absurde :</strong><br>
+        Montrer que $\\sqrt{2}$ est irrationnel.<br>
+        Supposons $\\sqrt{2} = \\frac{p}{q}$ (irréductible). Alors $2q^2 = p^2$, donc $p^2$ est pair, donc $p$ est pair. Posons $p = 2p'$. Alors $2q^2 = 4p'^2$, donc $q^2 = 2p'^2$, donc $q$ est pair. Contradiction avec $\\frac{p}{q}$ irréductible.
+      </div>
+    `}
+  ]
+},
+
+algo: {
+  title: "🐍 Algorithmique & programmation",
+  sections: [
+    {h3:"Concepts fondamentaux", content:`
+      <ul>
+        <li><strong>Variable</strong> : nom qui désigne une valeur stockée en mémoire</li>
+        <li><strong>Affectation</strong> : $x \\leftarrow 5$ (en Python : <code>x = 5</code>)</li>
+        <li><strong>Instruction conditionnelle</strong> : <code>if / elif / else</code></li>
+        <li><strong>Boucle bornée</strong> : <code>for i in range(n)</code></li>
+        <li><strong>Boucle non bornée</strong> : <code>while condition</code></li>
+        <li><strong>Fonction</strong> : bloc réutilisable, <code>def f(x): return ...</code></li>
+      </ul>
+    `},
+    {h3:"Notion de liste", content:`
+      <div class="formula-box">
+        <strong>Génération en extension :</strong> <code>L = [1, 3, 5, 7]</code><br>
+        <strong>Génération en compréhension :</strong> <code>L = [2*i for i in range(10)]</code><br>
+        <strong>Ajout :</strong> <code>L.append(x)</code><br>
+        <strong>Accès :</strong> <code>L[0]</code> (premier), <code>L[-1]</code> (dernier)<br>
+        <strong>Longueur :</strong> <code>len(L)</code><br>
+        <strong>Parcours :</strong> <code>for x in L:</code> ou <code>for i in range(len(L)):</code>
+      </div>
+    `},
+    {h3:"Programmation modulaire", content:`
+      <div class="tip-box">
+        <strong>💡 Principe :</strong> Découper une tâche complexe en sous-fonctions simples. Chaque fonction fait une chose et la fait bien.
+      </div>
+      <div class="code-block">
+<span class="kw">def</span> <span class="fn">est_pair</span>(n):<br>
+&nbsp;&nbsp;<span class="kw">return</span> n % <span class="num">2</span> == <span class="num">0</span><br><br>
+<span class="kw">def</span> <span class="fn">filtre_pairs</span>(L):<br>
+&nbsp;&nbsp;<span class="kw">return</span> [x <span class="kw">for</span> x <span class="kw">in</span> L <span class="kw">if</span> <span class="fn">est_pair</span>(x)]<br><br>
+<span class="cm"># Utilisation</span><br>
+<span class="fn">print</span>(<span class="fn">filtre_pairs</span>([<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>,<span class="num">5</span>,<span class="num">6</span>]))  <span class="cm"># [2, 4, 6]</span>
+      </div>
+    `}
+  ]
+},
+
+auto: {
+  title: "⚡ Automatismes",
+  sections: [
+    {h3:"Évolutions et variations", content:`
+      <div class="formula-box">
+        <strong>Taux d'évolution :</strong> $t = \\frac{V_f - V_i}{V_i}$<br><br>
+        <strong>Valeur finale :</strong> $V_f = V_i \\times (1 + t)$<br><br>
+        <strong>Évolutions successives :</strong> coefficient multiplicateur global $= (1+t_1)(1+t_2)\\cdots(1+t_n)$<br><br>
+        <strong>Taux réciproque :</strong> si $t$ est le taux, le taux réciproque est $t' = \\frac{1}{1+t} - 1$
+      </div>
+    `},
+    {h3:"Calcul numérique et algébrique", content:`
+      <div class="formula-box">
+        <strong>Équation produit nul :</strong> $A \\times B = 0 \\Leftrightarrow A = 0 \\text{ ou } B = 0$<br><br>
+        <strong>Signe de $ax + b$ :</strong><br>
+        — nul en $x = -\\frac{b}{a}$<br>
+        — du signe de $a$ pour $x > -\\frac{b}{a}$<br><br>
+        <strong>Signe de $a(x-x_1)(x-x_2)$ :</strong><br>
+        — nul en $x_1$ et $x_2$<br>
+        — du signe de $a$ à l'extérieur des racines
+      </div>
+    `},
+    {h3:"Fonctions et représentations", content:`
+      <ul>
+        <li>Résoudre graphiquement $f(x) = k$ : lire l'abscisse des points d'intersection avec la droite $y = k$</li>
+        <li>Résoudre $f(x) < k$ : lire les abscisses où la courbe est en dessous de $y = k$</li>
+        <li>Tableau de variations : lire les « montées » et « descentes » de la courbe</li>
+        <li>Équation réduite d'une droite : $y = mx + p$ où $m$ = coefficient directeur, $p$ = ordonnée à l'origine</li>
+        <li>Coefficient directeur : $m = \\frac{y_B - y_A}{x_B - x_A}$</li>
+      </ul>
+    `},
+    {h3:"Statistiques", content:`
+      <ul>
+        <li>Lire un graphique : repérer origine, unités, échelles</li>
+        <li>Indicateurs : moyenne, médiane, écart type, quartiles</li>
+        <li>Passer du graphique aux données et inversement</li>
+      </ul>
+    `},
+    {h3:"Probabilités (automatismes)", content:`
+      <div class="formula-box">
+        <strong>Probabilité conditionnelle :</strong> $P_A(B) = \\frac{P(A \\cap B)}{P(A)}$<br><br>
+        <strong>Distinguer :</strong><br>
+        $P(A \\cap B)$ : probabilité de l'intersection<br>
+        $P_A(B)$ : probabilité de B sachant que A est réalisé<br>
+        $P_B(A)$ : probabilité de A sachant que B est réalisé
+      </div>
+    `}
+  ]
+},
+
+suites: {
+  title: "🔢 Suites numériques, modèles discrets",
+  sections: [
+    {h3:"Modes de génération", content:`
+      <ul>
+        <li><strong>Formule explicite</strong> : $u_n = f(n)$, on calcule directement tout terme</li>
+        <li><strong>Récurrence</strong> : $u_{n+1} = f(u_n)$, chaque terme dépend du précédent</li>
+        <li><strong>Par algorithme</strong> : programme Python calculant les termes</li>
+        <li><strong>Par motif géométrique/combinatoire</strong> : nombres figurés, dénombrement</li>
+      </ul>
+    `},
+    {h3:"Suites arithmétiques", content:`
+      <div class="formula-box">
+        <strong>Définition :</strong> $u_{n+1} = u_n + r$ (raison $r$)<br><br>
+        <strong>Terme général :</strong> $u_n = u_0 + nr$ ou $u_n = u_p + (n-p)r$<br><br>
+        <strong>Somme :</strong> $1 + 2 + \\cdots + n = \\frac{n(n+1)}{2}$<br><br>
+        <strong>Somme de termes :</strong> $\\sum_{k=p}^{q} u_k = \\frac{(\\text{nombre de termes}) \\times (\\text{premier} + \\text{dernier})}{2}$<br><br>
+        <strong>Variation :</strong> croissante si $r > 0$, décroissante si $r < 0$, constante si $r = 0$
+      </div>
+      <div class="demo-box">
+        <strong>🔬 Démonstration exigible :</strong> Calcul du terme général<br>
+        $u_n = u_0 + nr$ : par récurrence immédiate, ou en sommant $u_{k+1} - u_k = r$ de $k=0$ à $n-1$.
+      </div>
+    `},
+    {h3:"Suites géométriques", content:`
+      <div class="formula-box">
+        <strong>Définition :</strong> $u_{n+1} = u_n \\times q$ (raison $q$)<br><br>
+        <strong>Terme général :</strong> $u_n = u_0 \\times q^n$ ou $u_n = u_p \\times q^{n-p}$<br><br>
+        <strong>Somme :</strong> $1 + q + q^2 + \\cdots + q^n = \\frac{1 - q^{n+1}}{1 - q}$ (si $q \\neq 1$)<br><br>
+        <strong>Variation :</strong> dépend du signe de $u_0$ et de la valeur de $q$<br>
+        — Si $q > 1$ et $u_0 > 0$ : croissante<br>
+        — Si $0 < q < 1$ et $u_0 > 0$ : décroissante
+      </div>
+      <div class="demo-box">
+        <strong>🔬 Démonstration exigible :</strong><br>
+        Terme général : $u_n = u_0 \\times q^n$ — par itération de $u_{k+1} = u_k \\times q$.<br><br>
+        Somme $1 + q + \\cdots + q^n$ : poser $S = 1 + q + \\cdots + q^n$, calculer $S - qS = 1 - q^{n+1}$, d'où $S = \\frac{1 - q^{n+1}}{1-q}$.
+      </div>
+    `},
+    {h3:"Sens de variation", content:`
+      <ul>
+        <li><strong>Méthode 1 :</strong> Étudier le signe de $u_{n+1} - u_n$</li>
+        <li><strong>Méthode 2 :</strong> Comparer $\\frac{u_{n+1}}{u_n}$ à 1 (si $u_n > 0$)</li>
+        <li><strong>Méthode 3 :</strong> Étudier la fonction $f$ telle que $u_n = f(n)$</li>
+      </ul>
+    `},
+    {h3:"Introduction à la limite", content:`
+      <div class="tip-box">
+        <strong>💡 Intuition :</strong> Pas de formalisation exigible ! On développe une intuition :<br>
+        — Suite géométrique avec $0 < q < 1$ : les termes se rapprochent de 0<br>
+        — Suite géométrique avec $q > 1$ et $u_0 > 0$ : les termes dépassent toute valeur fixée<br>
+        — Suite de Syracuse : comportement mystérieux, pas de limite simple
+      </div>
+    `},
+    {h3:"Modélisations", content:`
+      <ul>
+        <li><strong>Croissance linéaire</strong> → suite arithmétique (accroissements constants)</li>
+        <li><strong>Croissance exponentielle à temps discret</strong> → suite géométrique (taux constant)</li>
+        <li>Évolution d'un capital, croissance de population, décroissance radioactive</li>
+      </ul>
+    `}
+  ]
+},
+
+second: {
+  title: "📐 Équations, fonctions polynômes du second degré",
+  sections: [
+    {h3:"Les trois formes", content:`
+      <div class="formula-box">
+        <strong>Forme développée :</strong> $f(x) = ax^2 + bx + c$<br><br>
+        <strong>Forme canonique :</strong> $f(x) = a(x - \\alpha)^2 + \\beta$ où $\\alpha = -\\frac{b}{2a}$, $\\beta = f(\\alpha)$<br><br>
+        <strong>Forme factorisée :</strong> $f(x) = a(x - x_1)(x - x_2)$ (si $\\Delta > 0$)
+      </div>
+      <div class="tip-box">
+        <strong>💡 Complétion du carré :</strong> $x^2 + 2ax = (x+a)^2 - a^2$<br>
+        Exemple : $x^2 + 6x = (x+3)^2 - 9$<br>
+        C'est la méthode pour passer de la forme développée à la forme canonique dans les cas simples.
+      </div>
+    `},
+    {h3:"Discriminant et résolution", content:`
+      <div class="formula-box">
+        <strong>Discriminant :</strong> $\\Delta = b^2 - 4ac$<br><br>
+        <strong>Si $\\Delta > 0$ :</strong> deux racines $x_1 = \\frac{-b - \\sqrt{\\Delta}}{2a}$ et $x_2 = \\frac{-b + \\sqrt{\\Delta}}{2a}$<br><br>
+        <strong>Si $\\Delta = 0$ :</strong> une racine double $x_0 = \\frac{-b}{2a}$<br><br>
+        <strong>Si $\\Delta < 0$ :</strong> pas de racine réelle<br><br>
+        <strong>Somme et produit des racines :</strong> $x_1 + x_2 = -\\frac{b}{a}$, $x_1 \\times x_2 = \\frac{c}{a}$
+      </div>
+      <div class="demo-box">
+        <strong>🔬 Démonstration exigible :</strong> Résolution de $ax^2 + bx + c = 0$<br>
+        $ax^2 + bx + c = a\\left(x + \\frac{b}{2a}\\right)^2 - \\frac{b^2 - 4ac}{4a} = a\\left(x + \\frac{b}{2a}\\right)^2 - \\frac{\\Delta}{4a}$<br>
+        Si $\\Delta \\geq 0$ : on factorise en $a\\left(x + \\frac{b}{2a} - \\frac{\\sqrt{\\Delta}}{2a}\\right)\\left(x + \\frac{b}{2a} + \\frac{\\sqrt{\\Delta}}{2a}\\right) = 0$<br>
+        D'où $x_1$ et $x_2$.
+      </div>
+    `},
+    {h3:"Signe du trinôme", content:`
+      <div class="formula-box">
+        <strong>Si $\\Delta > 0$ :</strong> signe de $a$ à l'extérieur des racines, signe de $-a$ entre les racines<br><br>
+        <strong>Si $\\Delta = 0$ :</strong> signe de $a$ pour tout $x \\neq x_0$, nul en $x_0$<br><br>
+        <strong>Si $\\Delta < 0$ :</strong> signe de $a$ pour tout $x$
+      </div>
+    `},
+    {h3:"Choisir la bonne forme", content:`
+      <ul>
+        <li><strong>Équation/inéquation</strong> → forme factorisée (si possible)</li>
+        <li><strong>Variations, extremum</strong> → forme canonique ($\\beta$ = extremum)</li>
+        <li><strong>Signe</strong> → forme factorisée</li>
+        <li><strong>Calcul d'images</strong> → forme développée ou canonique</li>
+      </ul>
+      <div class="warn-box">
+        <strong>⚠️ Stratégies de factorisation :</strong><br>
+        1. Racine évidente ($1$, $-1$, $2$...) → factoriser directement<br>
+        2. Coefficient $b = 0$ → $ax^2 + c$, identité remarquable si possible<br>
+        3. Racines entières détectées via somme et produit<br>
+        4. Formules générales avec $\\Delta$ en dernier recours
+      </div>
+    `}
+  ]
+},
+
+derivation: {
+  title: "📈 Dérivation",
+  sections: [
+    {h3:"Taux de variation", content:`
+      <div class="formula-box">
+        <strong>Taux de variation</strong> de $f$ entre $a$ et $a+h$ :<br>
+        $\\tau = \\frac{f(a+h) - f(a)}{h}$<br><br>
+        <strong>Interprétation géométrique :</strong> pente de la sécante à la courbe passant par les points d'abscisses $a$ et $a+h$
+      </div>
+    `},
+    {h3:"Nombre dérivé", content:`
+      <div class="formula-box">
+        <strong>Définition :</strong> $f'(a) = \\lim_{h \\to 0} \\frac{f(a+h) - f(a)}{h}$<br><br>
+        <strong>Interprétations :</strong><br>
+        — Géométrique : pente de la tangente à $\\mathcal{C}_f$ en $a$<br>
+        — Cinématique : vitesse instantanée<br>
+        — Économique : coût marginal
+      </div>
+    `},
+    {h3:"Tangente", content:`
+      <div class="formula-box">
+        <strong>Équation de la tangente</strong> en $a$ :<br>
+        $y = f(a) + f'(a)(x - a)$<br><br>
+        <strong>Approximation linéaire :</strong><br>
+        $f(a + h) \\approx f(a) + f'(a) \\times h$ pour $h$ petit
+      </div>
+      <div class="demo-box">
+        <strong>🔬 Démonstration exigible :</strong><br>
+        La tangente à $\\mathcal{C}_f$ au point d'abscisse $a$ est la droite passant par $(a, f(a))$ de pente $f'(a)$, d'équation $y - f(a) = f'(a)(x - a)$, soit $y = f(a) + f'(a)(x - a)$.
+      </div>
+    `},
+    {h3:"Fonction dérivée", content:`
+      <div class="formula-box">
+        <strong>Dérivées usuelles :</strong><br><br>
+        $f(x) = x^n$ → $f'(x) = nx^{n-1}$ ($n \\in \\mathbb{Z}$)<br>
+        $f(x) = x^2$ → $f'(x) = 2x$<br>
+        $f(x) = x^3$ → $f'(x) = 3x^2$<br>
+        $f(x) = \\frac{1}{x}$ → $f'(x) = -\\frac{1}{x^2}$<br>
+        $f(x) = \\sqrt{x}$ → $f'(x) = \\frac{1}{2\\sqrt{x}}$<br>
+        $f(x) = e^x$ → $f'(x) = e^x$
+      </div>
+      <div class="formula-box">
+        <strong>Opérations :</strong><br><br>
+        $(f + g)' = f' + g'$<br>
+        $(kf)' = kf'$<br>
+        $(fg)' = f'g + fg'$<br>
+        $\\left(\\frac{1}{f}\\right)' = -\\frac{f'}{f^2}$<br>
+        $\\left(\\frac{f}{g}\\right)' = \\frac{f'g - fg'}{g^2}$
+      </div>
+      <div class="demo-box">
+        <strong>🔬 Démonstrations exigibles :</strong><br>
+        — Dérivée de $x^2$ : $\\frac{(x+h)^2 - x^2}{h} = 2x + h \\to 2x$<br>
+        — Dérivée de $\\frac{1}{x}$ : $\\frac{\\frac{1}{x+h} - \\frac{1}{x}}{h} = \\frac{-1}{x(x+h)} \\to -\\frac{1}{x^2}$<br>
+        — Dérivée d'un produit $(fg)' = f'g + fg'$<br>
+        — $\\sqrt{x}$ non dérivable en 0 (taux de variation $\\to +\\infty$)
+      </div>
+    `}
+  ]
+},
+
+variations: {
+  title: "📊 Variations et courbes représentatives",
+  sections: [
+    {h3:"Dérivée et variations", content:`
+      <div class="formula-box">
+        <strong>Théorème fondamental :</strong><br>
+        — Si $f'(x) > 0$ sur $I$, alors $f$ est strictement croissante sur $I$<br>
+        — Si $f'(x) < 0$ sur $I$, alors $f$ est strictement décroissante sur $I$<br>
+        — Si $f'(x) = 0$ sur $I$, alors $f$ est constante sur $I$
+      </div>
+    `},
+    {h3:"Extrémums", content:`
+      <div class="formula-box">
+        <strong>Condition nécessaire :</strong> si $f$ admet un extremum local en $a$, alors $f'(a) = 0$<br><br>
+        <strong>Attention :</strong> $f'(a) = 0$ ne suffit pas ! Il faut vérifier le changement de signe de $f'$
+      </div>
+    `},
+    {h3:"Fonctions paires et impaires", content:`
+      <div class="formula-box">
+        <strong>Fonction paire :</strong> $f(-x) = f(x)$ → courbe symétrique par rapport à l'axe des ordonnées<br><br>
+        <strong>Fonction impaire :</strong> $f(-x) = -f(x)$ → courbe symétrique par rapport à l'origine
+      </div>
+    `},
+    {h3:"Méthode d'étude", content:`
+      <ol>
+        <li>Déterminer le domaine de définition</li>
+        <li>Calculer $f'(x)$</li>
+        <li>Factoriser $f'(x)$ pour étudier son signe</li>
+        <li>Construire le tableau de signes de $f'$</li>
+        <li>En déduire le tableau de variations de $f$</li>
+        <li>Calculer les extremums et les limites aux bornes</li>
+      </ol>
+    `},
+    {h3:"Optimisation", content:`
+      <div class="tip-box">
+        <strong>💡 Méthode type :</strong><br>
+        1. Modéliser le problème (exprimer la quantité à optimiser en fonction d'une variable)<br>
+        2. Dériver<br>
+        3. Trouver où la dérivée s'annule<br>
+        4. Vérifier que c'est un max/min (signe de $f'$ de part et d'autre)<br>
+        5. Conclure en contextulisant
+      </div>
+    `}
+  ]
+},
+
+exp: {
+  title: "🚀 Fonction exponentielle",
+  sections: [
+    {h3:"Définition", content:`
+      <div class="formula-box">
+        <strong>Définition :</strong> La fonction exponentielle est l'unique fonction $f$ dérivable sur $\\mathbb{R}$ telle que :<br>
+        $f' = f$ et $f(0) = 1$<br><br>
+        Notation : $\\exp(x)$ ou $e^x$ où $e = \\exp(1) \\approx 2{,}718$
+      </div>
+      <div class="warn-box">
+        <strong>⚠️ L'existence et l'unicité sont admises.</strong> Les démonstrations sont en approfondissement possible.
+      </div>
+    `},
+    {h3:"Propriétés algébriques", content:`
+      <div class="formula-box">
+        $e^{x+y} = e^x \\times e^y$<br>
+        $e^{-x} = \\frac{1}{e^x}$<br>
+        $e^{x-y} = \\frac{e^x}{e^y}$<br>
+        $(e^x)^n = e^{nx}$ pour $n \\in \\mathbb{Z}$<br>
+        $e^x > 0$ pour tout $x$
+      </div>
+    `},
+    {h3:"Étude de la fonction", content:`
+      <div class="formula-box">
+        <strong>Signe :</strong> $e^x > 0$ pour tout $x \\in \\mathbb{R}$<br><br>
+        <strong>Variations :</strong> strictement croissante sur $\\mathbb{R}$ (car $f' = f > 0$)<br><br>
+        <strong>Limites :</strong><br>
+        $\\lim_{x \\to +\\infty} e^x = +\\infty$<br>
+        $\\lim_{x \\to -\\infty} e^x = 0$<br><br>
+        <strong>Dérivée composée :</strong> $(e^{ax})' = ae^{ax}$
+      </div>
+    `},
+    {h3:"Lien avec les suites géométriques", content:`
+      <div class="tip-box">
+        <strong>💡 Parallèle fondamental :</strong><br>
+        — Croissance exponentielle continue : $f(t) = e^{kt}$<br>
+        — Croissance géométrique discrète : $u_n = u_0 \\times q^n$<br><br>
+        Si on observe une évolution à taux constant :<br>
+        • à temps discret → suite géométrique<br>
+        • à temps continu → fonction exponentielle
+      </div>
+    `},
+    {h3:"Modélisations", content:`
+      <ul>
+        <li><strong>Croissance</strong> : $f(t) = Ce^{kt}$ avec $k > 0$ (capital, population)</li>
+        <li><strong>Décroissance</strong> : $f(t) = Ce^{-kt}$ avec $k > 0$ (radioactivité, dilution)</li>
+      </ul>
+    `}
+  ]
+},
+
+trigo: {
+  title: "⭕ Trigonométrie",
+  sections: [
+    {h3:"Cercle trigonométrique", content:`
+      <div class="formula-box">
+        Cercle de rayon 1 centré à l'origine, parcouru dans le sens direct (inverse des aiguilles).<br><br>
+        <strong>Longueur d'arc :</strong> un angle de $\\theta$ radians intercepte un arc de longueur $\\theta$<br><br>
+        <strong>Conversion :</strong> $180° = \\pi$ rad, donc $\\alpha° = \\frac{\\alpha\\pi}{180}$ rad
+      </div>
+    `},
+    {h3:"Enroulement de la droite", content:`
+      <ul>
+        <li>À tout réel $x$, on associe un unique point $M$ sur le cercle trigonométrique</li>
+        <li>Les réels $x$ et $x + 2k\\pi$ ($k \\in \\mathbb{Z}$) correspondent au même point</li>
+      </ul>
+    `},
+    {h3:"Cosinus et sinus", content:`
+      <div class="formula-box">
+        Si $M$ est le point du cercle associé à $x$ :<br>
+        $\\cos(x)$ = abscisse de $M$, $\\sin(x)$ = ordonnée de $M$<br><br>
+        <strong>Propriétés :</strong><br>
+        $-1 \\leq \\cos(x) \\leq 1$ et $-1 \\leq \\sin(x) \\leq 1$<br>
+        $\\cos^2(x) + \\sin^2(x) = 1$<br>
+        $\\cos(-x) = \\cos(x)$ (pair), $\\sin(-x) = -\\sin(x)$ (impair)<br>
+        $\\cos(x + 2\\pi) = \\cos(x)$, $\\sin(x + 2\\pi) = \\sin(x)$
+      </div>
+    `},
+    {h3:"Valeurs remarquables", content:`
+      <div class="formula-box" style="text-align:left">
+        <table style="width:100%;border-collapse:collapse">
+        <tr style="border-bottom:1px solid var(--border)"><th style="padding:0.5rem;text-align:left">$x$</th><th style="padding:0.5rem">0</th><th style="padding:0.5rem">$\\frac{\\pi}{6}$</th><th style="padding:0.5rem">$\\frac{\\pi}{4}$</th><th style="padding:0.5rem">$\\frac{\\pi}{3}$</th><th style="padding:0.5rem">$\\frac{\\pi}{2}$</th><th style="padding:0.5rem">$\\pi$</th></tr>
+        <tr><td style="padding:0.5rem">$\\cos x$</td><td style="padding:0.5rem;text-align:center">1</td><td style="padding:0.5rem;text-align:center">$\\frac{\\sqrt{3}}{2}$</td><td style="padding:0.5rem;text-align:center">$\\frac{\\sqrt{2}}{2}$</td><td style="padding:0.5rem;text-align:center">$\\frac{1}{2}$</td><td style="padding:0.5rem;text-align:center">0</td><td style="padding:0.5rem;text-align:center">−1</td></tr>
+        <tr><td style="padding:0.5rem">$\\sin x$</td><td style="padding:0.5rem;text-align:center">0</td><td style="padding:0.5rem;text-align:center">$\\frac{1}{2}$</td><td style="padding:0.5rem;text-align:center">$\\frac{\\sqrt{2}}{2}$</td><td style="padding:0.5rem;text-align:center">$\\frac{\\sqrt{3}}{2}$</td><td style="padding:0.5rem;text-align:center">1</td><td style="padding:0.5rem;text-align:center">0</td></tr>
+        </table>
+      </div>
+      <div class="demo-box">
+        <strong>🔬 Démonstrations exigibles :</strong><br>
+        $\\cos\\frac{\\pi}{4} = \\sin\\frac{\\pi}{4} = \\frac{\\sqrt{2}}{2}$ (triangle rectangle isocèle)<br>
+        $\\cos\\frac{\\pi}{3} = \\frac{1}{2}$, $\\sin\\frac{\\pi}{3} = \\frac{\\sqrt{3}}{2}$ (triangle équilatéral de côté 1)
+      </div>
+    `}
+  ]
+},
+
+scalaire: {
+  title: "➡️ Produit scalaire",
+  sections: [
+    {h3:"Définitions", content:`
+      <div class="formula-box">
+        <strong>Par projection orthogonale :</strong><br>
+        $\\vec{u} \\cdot \\vec{v} = \\|\\vec{u}\\| \\times \\|\\vec{v}\\| \\times \\cos(\\theta)$<br>
+        ou $\\vec{u} \\cdot \\vec{v} = \\|\\vec{u}\\| \\times \\|\\vec{v_{\\bot}}\\|$ (norme du projeté)<br><br>
+        <strong>En coordonnées</strong> (base orthonormée) :<br>
+        $\\vec{u} \\cdot \\vec{v} = xx' + yy'$<br><br>
+        <strong>Avec les normes :</strong><br>
+        $\\vec{u} \\cdot \\vec{v} = \\frac{1}{2}(\\|\\vec{u}\\|^2 + \\|\\vec{v}\\|^2 - \\|\\vec{u}-\\vec{v}\\|^2)$
+      </div>
+    `},
+    {h3:"Propriétés", content:`
+      <div class="formula-box">
+        <strong>Bilinéarité et symétrie :</strong><br>
+        $\\vec{u} \\cdot \\vec{v} = \\vec{v} \\cdot \\vec{u}$<br>
+        $(k\\vec{u}) \\cdot \\vec{v} = k(\\vec{u} \\cdot \\vec{v})$<br>
+        $(\\vec{u} + \\vec{v}) \\cdot \\vec{w} = \\vec{u} \\cdot \\vec{w} + \\vec{v} \\cdot \\vec{w}$<br><br>
+        <strong>Orthogonalité :</strong> $\\vec{u} \\cdot \\vec{v} = 0 \\Leftrightarrow \\vec{u} \\perp \\vec{v}$
+      </div>
+    `},
+    {h3:"Formules importantes", content:`
+      <div class="formula-box">
+        <strong>Développement :</strong><br>
+        $\\|\\vec{u} + \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 + 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$<br>
+        $\\|\\vec{u} - \\vec{v}\\|^2 = \\|\\vec{u}\\|^2 - 2\\vec{u} \\cdot \\vec{v} + \\|\\vec{v}\\|^2$<br><br>
+        <strong>Formule d'Al-Kashi :</strong><br>
+        $BC^2 = AB^2 + AC^2 - 2 \\times AB \\times AC \\times \\cos(\\hat{A})$
+      </div>
+      <div class="demo-box">
+        <strong>🔬 Démonstration exigible :</strong> Formule d'Al-Kashi avec le produit scalaire.<br>
+        $\\vec{BC} = \\vec{AC} - \\vec{AB}$, donc $BC^2 = \\|\\vec{AC} - \\vec{AB}\\|^2 = AC^2 - 2\\vec{AB}\\cdot\\vec{AC} + AB^2$.
+      </div>
+      <div class="demo-box">
+        <strong>🔬 Démonstration exigible :</strong> Ensemble des points $M$ tels que $\\overrightarrow{MA} \\cdot \\overrightarrow{MB} = 0$ est le cercle de diamètre $[AB]$.
+      </div>
+    `}
+  ]
+},
+
+geomrep: {
+  title: "📍 Géométrie repérée",
+  sections: [
+    {h3:"Vecteur normal", content:`
+      <div class="formula-box">
+        <strong>Vecteur normal</strong> à une droite $d$ : vecteur non nul orthogonal à tout vecteur directeur de $d$.<br><br>
+        <strong>Propriété :</strong> $\\vec{n}(a, b)$ est normal à la droite d'équation $ax + by + c = 0$<br><br>
+        <strong>Réciproque :</strong> toute droite de vecteur normal $\\vec{n}(a,b)$ a une équation $ax + by + c = 0$
+      </div>
+    `},
+    {h3:"Équation de droite", content:`
+      <div class="formula-box">
+        <strong>Méthode :</strong> Connaissant un point $A(x_0, y_0)$ et un vecteur normal $\\vec{n}(a, b)$ :<br>
+        $a(x - x_0) + b(y - y_0) = 0$<br>
+        soit $ax + by + c = 0$ avec $c = -ax_0 - by_0$
+      </div>
+    `},
+    {h3:"Projection orthogonale", content:`
+      <div class="formula-box">
+        <strong>Projeté orthogonal</strong> de $M(x_M, y_M)$ sur la droite $d : ax + by + c = 0$ :<br><br>
+        $H = M - \\frac{ax_M + by_M + c}{a^2 + b^2}(a, b)$<br><br>
+        <strong>Distance point-droite :</strong><br>
+        $d(M, d) = \\frac{|ax_M + by_M + c|}{\\sqrt{a^2 + b^2}}$
+      </div>
+    `},
+    {h3:"Équation de cercle", content:`
+      <div class="formula-box">
+        <strong>Cercle de centre $\\Omega(x_0, y_0)$ et rayon $r$ :</strong><br>
+        $(x - x_0)^2 + (y - y_0)^2 = r^2$<br><br>
+        <strong>Réciproque :</strong> si une équation s'écrit $(x-a)^2 + (y-b)^2 = r^2$, c'est le cercle de centre $(a,b)$ et rayon $r$.<br><br>
+        <strong>Astuce :</strong> $x^2 + y^2 - 2ax - 2by + c = 0$ → compléter les carrés pour retrouver centre et rayon.
+      </div>
+    `}
+  ]
+},
+
+probas: {
+  title: "🎲 Probabilités conditionnelles et indépendance",
+  sections: [
+    {h3:"Probabilité conditionnelle", content:`
+      <div class="formula-box">
+        <strong>Définition :</strong> $P_A(B) = \\frac{P(A \\cap B)}{P(A)}$ (si $P(A) \\neq 0$)<br><br>
+        <strong>Conséquence :</strong> $P(A \\cap B) = P(A) \\times P_A(B)$
+      </div>
+    `},
+    {h3:"Indépendance", content:`
+      <div class="formula-box">
+        <strong>Définition :</strong> $A$ et $B$ sont indépendants si $P(A \\cap B) = P(A) \\times P(B)$<br><br>
+        <strong>Équivalent :</strong> $P_A(B) = P(B)$ (savoir que $A$ est réalisé ne modifie pas la probabilité de $B$)<br><br>
+        <strong>Attention :</strong> indépendance ≠ incompatibilité !<br>
+        Si $A$ et $B$ sont incompatibles ($A \\cap B = \\varnothing$), ils ne sont PAS indépendants (sauf si $P(A) = 0$ ou $P(B) = 0$).
+      </div>
+    `},
+    {h3:"Probabilités totales", content:`
+      <div class="formula-box">
+        <strong>Partition de l'univers :</strong> $A_1, A_2, \\ldots, A_n$ forment une partition si :<br>
+        — $A_1 \\cup A_2 \\cup \\cdots \\cup A_n = \\Omega$<br>
+        — $A_i \\cap A_j = \\varnothing$ pour $i \\neq j$<br><br>
+        <strong>Formule des probabilités totales :</strong><br>
+        $P(B) = P(B \\cap A_1) + P(B \\cap A_2) + \\cdots + P(B \\cap A_n)$<br>
+        $= P(A_1) \\times P_{A_1}(B) + P(A_2) \\times P_{A_2}(B) + \\cdots$
+      </div>
+    `},
+    {h3:"Arbres pondérés", content:`
+      <div class="tip-box">
+        <strong>💡 Règles de l'arbre :</strong><br>
+        1. Sur chaque branche, on lit une probabilité conditionnelle<br>
+        2. La somme des branches issues d'un même nœud = 1<br>
+        3. Le poids d'un chemin = produit des branches<br>
+        4. $P(B)$ = somme des poids des chemins menant à $B$
+      </div>
+    `},
+    {h3:"Épreuves de Bernoulli", content:`
+      <div class="formula-box">
+        <strong>Répétition de $n$ épreuves de Bernoulli</strong> identiques et indépendantes ($n \\leq 4$ au programme) :<br><br>
+        Chaque épreuve a deux issues : succès ($p$) et échec ($1-p$).<br>
+        L'arbre a $2^n$ chemins.<br><br>
+        $P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}$
+      </div>
+    `}
+  ]
+},
+
+va: {
+  title: "🎯 Variables aléatoires réelles",
+  sections: [
+    {h3:"Définition", content:`
+      <div class="formula-box">
+        <strong>Variable aléatoire réelle :</strong> fonction $X : \\Omega \\to \\mathbb{R}$ qui associe à chaque issue de l'univers une valeur numérique.<br><br>
+        <strong>Loi de probabilité :</strong> tableau donnant $P(X = x_i)$ pour chaque valeur $x_i$<br>
+        La somme de toutes les probabilités vaut 1.
+      </div>
+    `},
+    {h3:"Espérance", content:`
+      <div class="formula-box">
+        <strong>Espaces :</strong> $E(X) = \\sum_{i} x_i \\times P(X = x_i)$<br><br>
+        <strong>Linéarité :</strong> $E(aX + b) = aE(X) + b$<br><br>
+        <strong>Interprétation :</strong> valeur moyenne de $X$ sur un grand nombre de répétitions
+      </div>
+    `},
+    {h3:"Variance et écart type", content:`
+      <div class="formula-box">
+        <strong>Variance :</strong> $V(X) = \\sum_{i} P(X = x_i)(x_i - E(X))^2$<br><br>
+        <strong>Formule de König-Huygens :</strong><br>
+        $V(X) = E(X^2) - [E(X)]^2$<br><br>
+        <strong>Écart type :</strong> $\\sigma(X) = \\sqrt{V(X)}$<br><br>
+        <strong>Propriété :</strong> $V(aX + b) = a^2 V(X)$
+      </div>
+      <div class="tip-box">
+        <strong>💡 Lien avec le 2nd degré :</strong> $V(X) = E[(X - E(X))^2]$. La fonction $x \\mapsto E[(X-x)^2]$ est un polynôme du second degré dont le minimum est atteint en $x = E(X)$ et vaut $V(X)$.
+      </div>
+    `},
+    {h3:"Simulation et estimation", content:`
+      <div class="tip-box">
+        <strong>💡 Principe :</strong> Simuler $N$ échantillons de taille $n$ d'une variable aléatoire $X$ d'espérance $\\mu$ et d'écart type $\\sigma$.<br><br>
+        Si $m$ est la moyenne d'un échantillon, la proportion des cas où $|m - \\mu| \\leq \\frac{2\\sigma}{\\sqrt{n}}$ est d'environ 95%.
+      </div>
+    `}
+  ]
+}
+};
+
+// =================== FORMULA SHEETS ===================
+const formulas = {
+algebre: `
+<div class="formulas-grid">
+  <div class="formula-card"><h4>Suite arithmétique</h4>$u_n = u_0 + nr$</div>
+  <div class="formula-card"><h4>Somme arithmétique</h4>$1 + 2 + \\cdots + n = \\frac{n(n+1)}{2}$</div>
+  <div class="formula-card"><h4>Suite géométrique</h4>$u_n = u_0 \\times q^n$</div>
+  <div class="formula-card"><h4>Somme géométrique</h4>$1 + q + \\cdots + q^n = \\frac{1-q^{n+1}}{1-q}$</div>
+  <div class="formula-card"><h4>Discriminant</h4>$\\Delta = b^2 - 4ac$</div>
+  <div class="formula-card"><h4>Racines</h4>$x = \\frac{-b \\pm \\sqrt{\\Delta}}{2a}$</div>
+  <div class="formula-card"><h4>Forme canonique</h4>$a\\left(x + \\frac{b}{2a}\\right)^2 - \\frac{\\Delta}{4a}$</div>
+  <div class="formula-card"><h4>Somme/produit racines</h4>$x_1+x_2=-\\frac{b}{a}$, $x_1 x_2=\\frac{c}{a}$</div>
+  <div class="formula-card"><h4>Complétion du carré</h4>$x^2+2ax=(x+a)^2-a^2$</div>
+  <div class="formula-card"><h4>Taux d'évolution</h4>$t=\\frac{V_f-V_i}{V_i}$</div>
+  <div class="formula-card"><h4>Évolutions successives</h4>$\\text{CM}=(1+t_1)(1+t_2)\\cdots$</div>
+  <div class="formula-card"><h4>Taux réciproque</h4>$t'=\\frac{1}{1+t}-1$</div>
+</div>`,
+analyse: `
+<div class="formulas-grid">
+  <div class="formula-card"><h4>Taux de variation</h4>$\\frac{f(a+h)-f(a)}{h}$</div>
+  <div class="formula-card"><h4>Équation tangente</h4>$y=f(a)+f'(a)(x-a)$</div>
+  <div class="formula-card"><h4>Dérivée $x^n$</h4>$(x^n)'=nx^{n-1}$</div>
+  <div class="formula-card"><h4>Dérivée produit</h4>$(fg)'=f'g+fg'$</div>
+  <div class="formula-card"><h4>Dérivée quotient</h4>$\\left(\\frac{f}{g}\\right)'=\\frac{f'g-fg'}{g^2}$</div>
+  <div class="formula-card"><h4>Dérivée $e^{ax}$</h4>$(e^{ax})'=ae^{ax}$</div>
+  <div class="formula-card"><h4>Exp : propriété</h4>$e^{x+y}=e^xe^y$</div>
+  <div class="formula-card"><h4>Exp : inverse</h4>$e^{-x}=\\frac{1}{e^x}$</div>
+  <div class="formula-card"><h4>$\\cos^2+\\sin^2$</h4>$\\cos^2x+\\sin^2x=1$</div>
+  <div class="formula-card"><h4>Approximation linéaire</h4>$f(a+h)\\approx f(a)+f'(a)h$</div>
+</div>`,
+geo: `
+<div class="formulas-grid">
+  <div class="formula-card"><h4>Produit scalaire (coords)</h4>$\\vec{u}\\cdot\\vec{v}=xx'+yy'$</div>
+  <div class="formula-card"><h4>Produit scalaire (angle)</h4>$\\vec{u}\\cdot\\vec{v}=\\|\\vec{u}\\|\\|\\vec{v}\\|\\cos\\theta$</div>
+  <div class="formula-card"><h4>Norme</h4>$\\|\\vec{u}\\|=\\sqrt{x^2+y^2}$</div>
+  <div class="formula-card"><h4>Al-Kashi</h4>$BC^2=AB^2+AC^2-2AB\\cdot AC\\cos\\hat{A}$</div>
+  <div class="formula-card"><h4>Droite (vect. normal)</h4>$a(x-x_0)+b(y-y_0)=0$</div>
+  <div class="formula-card"><h4>Distance point-droite</h4>$d=\\frac{|ax_M+by_M+c|}{\\sqrt{a^2+b^2}}$</div>
+  <div class="formula-card"><h4>Cercle</h4>$(x-x_0)^2+(y-y_0)^2=r^2$</div>
+  <div class="formula-card"><h4>Orthogonalité</h4>$\\vec{u}\\cdot\\vec{v}=0\\Leftrightarrow\\vec{u}\\perp\\vec{v}$</div>
+</div>`,
+probas: `
+<div class="formulas-grid">
+  <div class="formula-card"><h4>Prob. conditionnelle</h4>$P_A(B)=\\frac{P(A\\cap B)}{P(A)}$</div>
+  <div class="formula-card"><h4>Intersection</h4>$P(A\\cap B)=P(A)\\times P_A(B)$</div>
+  <div class="formula-card"><h4>Indépendance</h4>$P(A\\cap B)=P(A)\\times P(B)$</div>
+  <div class="formula-card"><h4>Probas totales</h4>$P(B)=\\sum P(A_i)P_{A_i}(B)$</div>
+  <div class="formula-card"><h4>Espérance</h4>$E(X)=\\sum x_i P(X=x_i)$</div>
+  <div class="formula-card"><h4>Variance</h4>$V(X)=E(X^2)-[E(X)]^2$</div>
+  <div class="formula-card"><h4>Écart type</h4>$\\sigma=\\sqrt{V(X)}$</div>
+  <div class="formula-card"><h4>Linéarité espérance</h4>$E(aX+b)=aE(X)+b$</div>
+  <div class="formula-card"><h4>Linéarité variance</h4>$V(aX+b)=a^2V(X)$</div>
+  <div class="formula-card"><h4>Loi de Bernoulli</h4>$P(X=k)=\\binom{n}{k}p^k(1-p)^{n-k}$</div>
+</div>`
+};
+
+// =================== PYTHON SNIPPETS ===================
+const pythonSnippets = {
+suites_algo: `
+<div class="code-block"><span class="cm"># Calcul des termes d'une suite arithmétique</span>
+<span class="kw">def</span> <span class="fn">suite_arithmetique</span>(u0, r, n):
+    u = u0
+    L = [u]
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+        u = u + r
+        L.<span class="fn">append</span>(u)
+    <span class="kw">return</span> L
+
+<span class="cm"># Calcul des termes d'une suite géométrique</span>
+<span class="kw">def</span> <span class="fn">suite_geometrique</span>(u0, q, n):
+    u = u0
+    L = [u]
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+        u = u * q
+        L.<span class="fn">append</span>(u)
+    <span class="kw">return</span> L
+
+<span class="cm"># Somme des termes d'une suite arithmétique</span>
+<span class="kw">def</span> <span class="fn">somme_arith</span>(u0, r, n):
+    <span class="kw">return</span> (n + <span class="num">1</span>) * (u0 + u0 + n*r) / <span class="num">2</span>
+
+<span class="cm"># Suite de Fibonacci</span>
+<span class="kw">def</span> <span class="fn">fibonacci</span>(n):
+    L = [<span class="num">1</span>, <span class="num">1</span>]
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">2</span>, n):
+        L.<span class="fn">append</span>(L[<span class="num">-1</span>] + L[<span class="num">-2</span>])
+    <span class="kw">return</span> L
+
+<span class="cm"># Suite de Syracuse</span>
+<span class="kw">def</span> <span class="fn">syracuse</span>(u0, n):
+    u = u0
+    L = [u]
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+        <span class="kw">if</span> u % <span class="num">2</span> == <span class="num">0</span>:
+            u = u // <span class="num">2</span>
+        <span class="kw">else</span>:
+            u = <span class="num">3</span>*u + <span class="num">1</span>
+        L.<span class="fn">append</span>(u)
+    <span class="kw">return</span> L
+
+<span class="cm"># Factorielle</span>
+<span class="kw">def</span> <span class="fn">factorielle</span>(n):
+    <span class="kw">if</span> n == <span class="num">0</span>:
+        <span class="kw">return</span> <span class="num">1</span>
+    <span class="kw">return</span> n * <span class="fn">factorielle</span>(n - <span class="num">1</span>)
+</div>`,
+
+seuil: `
+<div class="code-block"><span class="cm"># Algorithme de recherche de seuil</span>
+<span class="cm"># Trouver le plus petit n tel que u_n > S</span>
+<span class="kw">def</span> <span class="fn">seuil_suite</span>(u0, f, S):
+    <span class="str">"""f est la fonction de récurrence : u_{n+1} = f(u_n)"""</span>
+    u = u0
+    n = <span class="num">0</span>
+    <span class="kw">while</span> u <= S:
+        u = <span class="fn">f</span>(u)
+        n = n + <span class="num">1</span>
+    <span class="kw">return</span> n
+
+<span class="cm"># Exemple : suite géométrique u_{n+1} = 1.05 * u_n</span>
+<span class="fn">print</span>(<span class="fn">seuil_suite</span>(<span class="num">1000</span>, <span class="kw">lambda</span> u: <span class="num">1.05</span> * u, <span class="num">2000</span>))
+
+<span class="cm"># Seuil pour suite définie explicitement</span>
+<span class="kw">def</span> <span class="fn">seuil_explicite</span>(f, S):
+    <span class="str">"""f est la fonction u_n = f(n), trouver n min tel que f(n) > S"""</span>
+    n = <span class="num">0</span>
+    <span class="kw">while</span> <span class="fn">f</span>(n) <= S:
+        n = n + <span class="num">1</span>
+    <span class="kw">return</span> n
+
+<span class="cm"># Approximation de e avec (1+1/n)^n</span>
+<span class="kw">def</span> <span class="fn">approx_e</span>(n):
+    <span class="kw">return</span> (<span class="num">1</span> + <span class="num">1</span>/n) ** n
+<span class="kw">for</span> n <span class="kw">in</span> [<span class="num">10</span>, <span class="num">100</span>, <span class="num">1000</span>, <span class="num">10000</span>]:
+    <span class="fn">print</span>(f<span class="str">"n={n}: (1+1/n)^n = {approx_e(n):.6f}"</span>)
+</div>`,
+
+euler: `
+<div class="code-block"><span class="cm"># Construction de l'exponentielle par la méthode d'Euler</span>
+<span class="kw">def</span> <span class="fn">euler_exp</span>(n):
+    <span class="str">"""Approximation de e^1 par Euler avec n pas"""</span>
+    h = <span class="num">1</span> / n
+    y = <span class="num">1</span>  <span class="cm"># y(0) = 1</span>
+    x = <span class="num">0</span>
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+        y = y + h * y  <span class="cm"># y' = y, donc y(x+h) ≈ y(x) + h*y(x)</span>
+        x = x + h
+    <span class="kw">return</span> y
+
+<span class="kw">for</span> n <span class="kw">in</span> [<span class="num">10</span>, <span class="num">100</span>, <span class="num">1000</span>, <span class="num">10000</span>]:
+    <span class="fn">print</span>(f<span class="str">"n={n}: Euler → {euler_exp(n):.6f} (e={2.718282:.6f})"</span>)
+
+<span class="cm"># Méthode de Newton pour trouver un zéro</span>
+<span class="kw">def</span> <span class="fn">newton</span>(f, fp, x0, n_iter=<span class="num">10</span>):
+    <span class="str">"""f: fonction, fp: dérivée, x0: point de départ"""</span>
+    x = x0
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n_iter):
+        x = x - <span class="fn">f</span>(x) / <span class="fn">fp</span>(x)
+    <span class="kw">return</span> x
+
+<span class="cm"># Exemple : trouver sqrt(2) comme zéro de x²-2</span>
+<span class="fn">print</span>(<span class="fn">newton</span>(<span class="kw">lambda</span> x: x**<span class="num">2</span>-<span class="num">2</span>, <span class="kw">lambda</span> x: <span class="num">2</span>*x, <span class="num">1.5</span>))
+
+<span class="cm"># Coefficients directeurs des sécantes</span>
+<span class="kw">def</span> <span class="fn">secantes</span>(f, a, h0, n):
+    <span class="str">"""Liste des pentes des sécantes pour h = h0, h0/2, ..., h0/2^n"""</span>
+    L = []
+    h = h0
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n + <span class="num">1</span>):
+        L.<span class="fn">append</span>((<span class="fn">f</span>(a + h) - <span class="fn">f</span>(a)) / h)
+        h = h / <span class="num">2</span>
+    <span class="kw">return</span> L
+
+<span class="cm"># Approximation de π par Archimède</span>
+<span class="kw">def</span> <span class="fn">archimede</span>(n):
+    <span class="str">"""Périmètre du polygone régulier à 6*2^n côtés inscrit"""</span>
+    c = <span class="num">1</span>  <span class="cm"># demi-côté pour hexagone</span>
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+        c = (<span class="num">2</span> - (<span class="num">4</span> - c**<span class="num">2</span>)**<span class="num">0.5</span>)**<span class="num">0.5</span>
+    <span class="kw">return</span> <span class="num">3</span> * <span class="num">2</span>**n * c
+</div>`,
+
+montecarlo: `
+<div class="code-block"><span class="cm"># Monte-Carlo : estimation de π</span>
+<span class="kw">import</span> random
+
+<span class="kw">def</span> <span class="fn">estimer_pi</span>(N):
+    compteur = <span class="num">0</span>
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(N):
+        x = random.<span class="fn">random</span>()  <span class="cm"># entre 0 et 1</span>
+        y = random.<span class="fn">random</span>()
+        <span class="kw">if</span> x**<span class="num">2</span> + y**<span class="num">2</span> <= <span class="num">1</span>:  <span class="cm"># dans le quart de disque</span>
+            compteur += <span class="num">1</span>
+    <span class="kw">return</span> <span class="num">4</span> * compteur / N  <span class="cm"># rapport = π/4</span>
+
+<span class="kw">for</span> N <span class="kw">in</span> [<span class="num">1000</span>, <span class="num">10000</span>, <span class="num">100000</span>]:
+    <span class="fn">print</span>(f<span class="str">"N={N}: π ≈ {estimer_pi(N):.4f}"</span>)
+
+<span class="cm"># Monte-Carlo : aire sous la parabole y=x² sur [0,1]</span>
+<span class="kw">def</span> <span class="fn">aire_parabole</span>(N):
+    compteur = <span class="num">0</span>
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(N):
+        x = random.<span class="fn">random</span>()
+        y = random.<span class="fn">random</span>()
+        <span class="kw">if</span> y <= x**<span class="num">2</span>:
+            compteur += <span class="num">1</span>
+    <span class="kw">return</span> compteur / N  <span class="cm"># aire exacte = 1/3</span>
+</div>`,
+
+va_algo: `
+<div class="code-block"><span class="cm"># Espérance, variance, écart type d'une variable aléatoire</span>
+<span class="kw">def</span> <span class="fn">esperance</span>(valeurs, probas):
+    <span class="str">"""valeurs et probas sont des listes de même taille"""</span>
+    <span class="kw">return</span> <span class="fn">sum</span>(v * p <span class="kw">for</span> v, p <span class="kw">in</span> <span class="fn">zip</span>(valeurs, probas))
+
+<span class="kw">def</span> <span class="fn">variance</span>(valeurs, probas):
+    E = <span class="fn">esperance</span>(valeurs, probas)
+    E2 = <span class="fn">esperance</span>([v**<span class="num">2</span> <span class="kw">for</span> v <span class="kw">in</span> valeurs], probas)
+    <span class="kw">return</span> E2 - E**<span class="num">2</span>  <span class="cm"># König-Huygens</span>
+
+<span class="kw">def</span> <span class="fn">ecart_type</span>(valeurs, probas):
+    <span class="kw">return</span> <span class="fn">variance</span>(valeurs, probas) ** <span class="num">0.5</span>
+
+<span class="cm"># Exemple : dé à 6 faces</span>
+vals = [<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>,<span class="num">5</span>,<span class="num">6</span>]
+probs = [<span class="num">1/6</span>]*<span class="num">6</span>
+<span class="fn">print</span>(f<span class="str">"E(X) = {esperance(vals, probs):.2f}"</span>)
+<span class="fn">print</span>(f<span class="str">"V(X) = {variance(vals, probs):.2f}"</span>)
+<span class="fn">print</span>(f<span class="str">"σ(X) = {ecart_type(vals, probs):.2f}"</span>)
+
+<span class="cm"># Simulation d'échantillons</span>
+<span class="kw">import</span> random
+
+<span class="kw">def</span> <span class="fn">echantillon</span>(valeurs, probas, n):
+    <span class="str">"""Simule un échantillon de taille n"""</span>
+    L = random.<span class="fn">choices</span>(valeurs, probas, k=n)
+    <span class="kw">return</span> <span class="fn">sum</span>(L) / <span class="fn">len</span>(L)  <span class="cm"># moyenne de l'échantillon</span>
+
+<span class="cm"># Fréquence des lettres dans un texte</span>
+<span class="kw">def</span> <span class="fn">freq_lettres</span>(texte):
+    freq = {}
+    <span class="kw">for</span> c <span class="kw">in</span> texte.<span class="fn">lower</span>():
+        <span class="kw">if</span> c.<span class="fn">isalpha</span>():
+            freq[c] = freq.<span class="fn">get</span>(c, <span class="num">0</span>) + <span class="num">1</span>
+    total = <span class="fn">sum</span>(freq.<span class="fn">values</span>())
+    <span class="kw">return</span> {c: n/total <span class="kw">for</span> c, n <span class="kw">in</span> <span class="fn">sorted</span>(freq.<span class="fn">items</span>())}
+</div>`
+};
+
+// =================== EXERCISES ===================
+const exercises = [
+  {ch:"Suites", title:"Suite arithmétique", q:"$(u_n)$ est arithmétique de raison 3 et $u_5 = 17$. Calculer $u_0$ puis $S = u_0 + u_1 + \\cdots + u_{10}$.", hint:"$u_n = u_5 + (n-5) \\times 3$, $S = 11 \\times \\frac{u_0 + u_{10}}{2}$"},
+  {ch:"Suites", title:"Suite géométrique", q:"$(v_n)$ est géométrique de raison 1.5 et $v_0 = 4$. Calculer $v_6$ et $S = v_0 + v_1 + \\cdots + v_6$.", hint:"$v_6 = 4 \\times 1.5^6$, $S = 4 \\times \\frac{1 - 1.5^7}{1 - 1.5}$"},
+  {ch:"Suites", title:"Seuil", q:"$(w_n)$ est définie par $w_0 = 100$ et $w_{n+1} = 1.08 \\times w_n$. Trouver le plus petit $n$ tel que $w_n > 500$.", hint:"Écrire un algorithme de seuil : $w_n = 100 \\times 1.08^n$, résoudre $1.08^n > 5$"},
+  {ch:"2nd degré", title:"Factorisation", q:"Factoriser $f(x) = 2x^2 - 5x - 3$.", hint:"$\\Delta = 25 + 24 = 49$, racines $x_1 = -\\frac{1}{2}$, $x_2 = 3$, donc $f(x) = 2(x+\\frac{1}{2})(x-3)$"},
+  {ch:"2nd degré", title:"Signe et optimisation", q:"Étudier le signe de $g(x) = -x^2 + 4x - 3$ et déterminer son maximum.", hint:"Forme canonique : $-(x-2)^2 + 1$, max = 1 en $x = 2$, positif entre 1 et 3"},
+  {ch:"Dérivation", title:"Nombre dérivé", q:"Soit $f(x) = x^2 + 3x$. Calculer $f'(2)$ par la limite du taux de variation, puis donner l'équation de la tangente en $x = 2$.", hint:"$\\frac{f(2+h)-f(2)}{h} = 7 + h \\to 7$. Tangente : $y = 10 + 7(x-2)$"},
+  {ch:"Dérivation", title:"Fonction dérivée", q:"Calculer la dérivée de $f(x) = (2x+1)e^{3x}$.", hint:"$f'(x) = 2e^{3x} + (2x+1) \\times 3e^{3x} = (6x+5)e^{3x}$"},
+  {ch:"Exponentielle", title:"Résolution", q:"Résoudre $e^{2x} - 3e^x + 2 = 0$.", hint:"Poser $X = e^x$ : $X^2 - 3X + 2 = 0$, $X = 1$ ou $X = 2$, donc $x = 0$ ou $x = \\ln 2$"},
+  {ch:"Exponentielle", title:"Croissance", q:"Une population de 1000 bactéries double toutes les 3 heures. Modéliser par une fonction exponentielle et calculer la population après 10 heures.", hint:"$P(t) = 1000 \\times 2^{t/3}$, $P(10) = 1000 \\times 2^{10/3} \\approx 10\\,079$"},
+  {ch:"Trigonométrie", title:"Valeurs remarquables", q:"Calculer $\\cos\\frac{5\\pi}{6}$ et $\\sin\\frac{5\\pi}{6}$.", hint:"$\\frac{5\\pi}{6} = \\pi - \\frac{\\pi}{6}$, donc $\\cos = -\\frac{\\sqrt{3}}{2}$, $\\sin = \\frac{1}{2}$"},
+  {ch:"Produit scalaire", title:"Calcul", q:"Dans un repère orthonormé, $\\vec{u}(3, -2)$ et $\\vec{v}(4, 1)$. Calculer $\\vec{u} \\cdot \\vec{v}$ et l'angle entre $\\vec{u}$ et $\\vec{v}$.", hint:"$\\vec{u} \\cdot \\vec{v} = 12 - 2 = 10$, $\\cos\\theta = \\frac{10}{\\sqrt{13}\\sqrt{17}}$"},
+  {ch:"Produit scalaire", title:"Al-Kashi", q:"Triangle $ABC$ avec $AB = 5$, $AC = 7$, $\\hat{A} = 60°$. Calculer $BC$.", hint:"$BC^2 = 25 + 49 - 2 \\times 5 \\times 7 \\times \\cos 60° = 74 - 35 = 39$, $BC = \\sqrt{39}$"},
+  {ch:"Géométrie repérée", title:"Cercle", q:"Déterminer centre et rayon du cercle d'équation $x^2 + y^2 - 4x + 6y - 3 = 0$.", hint:"$(x-2)^2 + (y+3)^2 = 16$, centre $(2,-3)$, rayon 4"},
+  {ch:"Probas", title:"Probabilités totales", q:"Une urne contient 3 boules rouges et 7 vertes. On tire 2 boules sans remise. Calculer la probabilité d'avoir au moins une rouge.", hint:"$P(\\text{au moins 1 rouge}) = 1 - P(\\text{2 vertes}) = 1 - \\frac{7}{10} \\times \\frac{6}{9} = 1 - \\frac{42}{90} = \\frac{48}{90}$"},
+  {ch:"Variables aléatoires", title:"Espérance et variance", q:"On lance un dé. $X = 2 \\times \\text{face} - 1$. Calculer $E(X)$, $V(X)$ et $\\sigma(X)$.", hint:"$E(X) = 2 \\times 3.5 - 1 = 6$, $V(X) = 4 \\times \\frac{35}{12} = \\frac{35}{3}$, $\\sigma = \\sqrt{\\frac{35}{3}}$"}
+];
+
+// =================== RENDER FUNCTIONS ===================
+function showChapter(key) {
+  const ch = chapters[key];
+  if (!ch) return;
+  const area = document.getElementById('contentArea');
+  let html = `<div class="content-panel active">
+    <button class="back-btn" onclick="this.parentElement.classList.remove('active');this.parentElement.innerHTML=''">← Retour aux chapitres</button>
+    <h2>${ch.title}</h2>`;
+  ch.sections.forEach(s => {
+    html += `<h3>${s.h3}</h3>${s.content}`;
+  });
+  html += '</div>';
+  area.innerHTML = html;
+  area.scrollIntoView({behavior:'smooth', block:'start'});
+  renderMath();
+}
+
+function showFormulaTab(tab) {
+  document.querySelectorAll('#formulaTabs .tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('formulaContent').innerHTML = formulas[tab];
+  renderMath();
+}
+
+function showPythonTab(tab) {
+  document.querySelectorAll('#pythonTabs .tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('pythonContent').innerHTML = pythonSnippets[tab];
+}
+
+function renderMath() {
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });
+  }
+}
+
+function filterChapters(query) {
+  const cards = document.querySelectorAll('.chapter-card');
+  const q = query.toLowerCase();
+  cards.forEach(c => {
+    const text = c.textContent.toLowerCase();
+    c.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+
+// Progress bar
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const p = h > 0 ? (window.scrollY / h) * 100 : 0;
+  document.getElementById('progressBar').style.width = p + '%';
+});
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  // Default formula tab
+  document.getElementById('formulaContent').innerHTML = formulas.algebre;
+
+  // Exercises
+  let exHtml = '<div class="chapters-grid">';
+  exercises.forEach((ex, i) => {
+    exHtml += `<div class="chapter-card" onclick="this.querySelector('.ex-hint').style.display=this.querySelector('.ex-hint').style.display==='none'?'block':'none'">
+      <div class="chapter-icon">✏️</div>
+      <h3>${ex.title}</h3>
+      <p style="color:var(--text)">${ex.ch}</p>
+      <p>${ex.q}</p>
+      <div class="ex-hint" style="display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+        <strong style="color:var(--green)">💡 Indice :</strong> ${ex.hint}
+      </div>
+    </div>`;
+  });
+  exHtml += '</div>';
+  document.getElementById('exerciseContent').innerHTML = exHtml;
+
+  // Render math after a small delay
+  setTimeout(renderMath, 500);
+});
+</script>
+</body>
+</html>
